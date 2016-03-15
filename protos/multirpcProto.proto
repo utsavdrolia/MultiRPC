@@ -1,17 +1,16 @@
 syntax = "proto2";
 option java_outer_classname = "MultiRPCProto";
 
-message MultiRPCMsg
+message MultiRPCReq
 {
-    enum MsgType
-    {
-        REQ = 0;
-        RESP = 1;
-    }
-    required MsgType msgType = 1;
-    required uint32 reqID = 2;
-    optional string serviceName = 3;
-    optional uint32 methodID = 4;
-    optional bytes args = 5;
-    optional bytes results = 6;
+    required uint32 reqID = 1;
+    required string serviceName = 2;
+    required uint32 methodID = 3;
+    required bytes args = 4;
+}
+
+message MultiRPCResp
+{
+    required uint32 reqID = 1;
+    required bytes results = 2;
 }
