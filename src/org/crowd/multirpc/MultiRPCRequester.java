@@ -14,7 +14,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
     private static final long SLEEP_TIME = 1000l;
     private final HashMap<String, ZMQ.Socket> deviceMap = new HashMap<>();
     private ZMQ.Socket registerSocket;
-    private ZMQ.Context ctx;
+    protected ZMQ.Context ctx;
     private boolean stop = false;
     private static final String SERVER_ACK = "OK";
     private int msgID = 0;
@@ -37,8 +37,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
         // Get new ID
         Integer id = getnextid();
         // Construct request
-        final MultiRPCProto.MultiRPCMsg msg = MultiRPCProto.MultiRPCMsg.newBuilder().
-                setMsgType(MultiRPCProto.MultiRPCMsg.MsgType.REQ).
+        final MultiRPCProto.MultiRPCReq msg = MultiRPCProto.MultiRPCReq.newBuilder().
                 setReqID(id).
                 setServiceName(methodDescriptor.getService().getName()).
                 setMethodID(methodDescriptor.getIndex()).
@@ -49,13 +48,14 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
         sendToAll(msg.toByteArray());
         // Put callback
         mCallbackHandler.putCallback(id, cb);
+        System.out.println("Called Method:" + methodDescriptor.getFullName());
     }
 
     /**
      * Forward message to each connected device
      * @param msg
      */
-    private void sendToAll(byte[] msg)
+    private synchronized void sendToAll(byte[] msg)
     {
         for (ZMQ.Socket sock:deviceMap.values())
         {
@@ -67,7 +67,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
      *
      * @return Keys to be used to track requests
      */
-    private Integer getnextid()
+    private synchronized Integer getnextid()
     {
         return this.msgID++;
     }
@@ -123,7 +123,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
 
                             try
                             {
-                                MultiRPCProto.MultiRPCMsg msg = MultiRPCProto.MultiRPCMsg.parseFrom(data);
+                                MultiRPCProto.MultiRPCResp msg = MultiRPCProto.MultiRPCResp.parseFrom(data);
                                 mCallbackHandler.callCallback(msg.getReqID(), msg.getResults());
                             } catch (InvalidProtocolBufferException e)
                             {
