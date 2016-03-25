@@ -64,14 +64,14 @@ public class SingleRPCResponder extends Thread implements RpcController
                     {
 
                         final MultiRPCProto.MultiRPCReq msg = MultiRPCProto.MultiRPCReq.parseFrom(data);
-                        requestExecutor.submit(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
+//                        requestExecutor.submit(new Runnable()
+//                        {
+//                            @Override
+//                            public void run()
+//                            {
                                 processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
-                            }
-                        });
+//                            }
+//                        });
 
                     } catch (InvalidProtocolBufferException e)
                     {

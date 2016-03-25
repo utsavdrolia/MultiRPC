@@ -26,7 +26,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
      */
     public MultiRPCRequester(String myAddress)
     {
-        ctx = ZMQ.context(1);
+        ctx = ZMQ.context(2);
         registerSocket = ctx.socket(ZMQ.REP);
         registerSocket.bind("tcp://" + myAddress);
     }
@@ -55,11 +55,14 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
      * Forward message to each connected device
      * @param msg
      */
-    private synchronized void sendToAll(byte[] msg)
+    private void sendToAll(byte[] msg)
     {
-        for (ZMQ.Socket sock:deviceMap.values())
+        synchronized (deviceMap)
         {
-            sock.send(msg);
+            for (ZMQ.Socket sock : deviceMap.values())
+            {
+                sock.send(msg);
+            }
         }
     }
 
@@ -114,22 +117,25 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
                 // Check for dealersockets
                 if(poller.getSize() > 1)
                 {
-                    for (int i = 1; i < poller.getSize(); i++)
+                    synchronized (deviceMap)
                     {
-                        if(poller.pollin(i))
+                        for (int i = 1; i < poller.getSize(); i++)
                         {
-                            ZMQ.Socket sock = poller.getSocket(i);
-                            byte[] data = sock.recv();
+                            if (poller.pollin(i))
+                            {
+                                ZMQ.Socket sock = poller.getSocket(i);
+                                byte[] data = sock.recv();
 
-                            try
-                            {
-                                MultiRPCProto.MultiRPCResp msg = MultiRPCProto.MultiRPCResp.parseFrom(data);
-                                mCallbackHandler.callCallback(msg.getReqID(), msg.getResults());
-                            } catch (InvalidProtocolBufferException e)
-                            {
-                                e.printStackTrace();
+                                try
+                                {
+                                    MultiRPCProto.MultiRPCResp msg = MultiRPCProto.MultiRPCResp.parseFrom(data);
+                                    mCallbackHandler.callCallback(msg.getReqID(), msg.getResults());
+                                } catch (InvalidProtocolBufferException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                                available--;
                             }
-                            available--;
                         }
                     }
                 }
