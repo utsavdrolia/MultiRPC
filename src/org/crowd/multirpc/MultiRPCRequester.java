@@ -1,6 +1,9 @@
 package org.crowd.multirpc;
 
 import com.google.protobuf.*;
+import org.crowd.rpc.CallbackHandler;
+import org.crowd.rpc._RPCCallback;
+import org.crowd.rpc.RPCProto;
 import org.zeromq.ZMQ;
 import java.util.HashMap;
 
@@ -37,7 +40,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
         // Get new ID
         Integer id = getnextid();
         // Construct request
-        final MultiRPCProto.MultiRPCReq msg = MultiRPCProto.MultiRPCReq.newBuilder().
+        final RPCProto.RPCReq msg = RPCProto.RPCReq.newBuilder().
                 setReqID(id).
                 setServiceName(methodDescriptor.getService().getName()).
                 setMethodID(methodDescriptor.getIndex()).
@@ -82,7 +85,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
 
     public void run()
     {
-        ZMQ.Poller poller = ctx.poller();
+        ZMQ.Poller poller = new ZMQ.Poller(1);
         poller.register(registerSocket, ZMQ.Poller.POLLIN);
         while (!stop && !this.isInterrupted())
         {
@@ -128,7 +131,7 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
 
                                 try
                                 {
-                                    MultiRPCProto.MultiRPCResp msg = MultiRPCProto.MultiRPCResp.parseFrom(data);
+                                    RPCProto.RPCResp msg = RPCProto.RPCResp.parseFrom(data);
                                     mCallbackHandler.callCallback(msg.getReqID(), msg.getResults());
                                 } catch (InvalidProtocolBufferException e)
                                 {
@@ -180,23 +183,6 @@ public class MultiRPCRequester extends Thread implements RpcChannel, RpcControll
             this.numReplies += 1;
         }
 
-    }
-
-    public class _RPCCallback<T extends Message>
-    {
-        private T returnMessagePrototype = null;
-        private RpcCallback<T> cb;
-
-        public _RPCCallback(T returnMessagePrototype, RpcCallback<T> cb)
-        {
-            this.returnMessagePrototype = returnMessagePrototype;
-            this.cb = cb;
-        }
-
-        protected void _run(ByteString msg) throws InvalidProtocolBufferException
-        {
-            cb.run((T) returnMessagePrototype.getParserForType().parseFrom(msg));
-        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.crowd.multirpc;
 
 import com.google.protobuf.*;
+import org.crowd.rpc.RPCProto;
 import org.zeromq.ZContext;
 import org.zeromq.ZFrame;
 import org.zeromq.ZMQ;
@@ -63,7 +64,7 @@ public class SingleRPCResponder extends Thread implements RpcController
                     try
                     {
 
-                        final MultiRPCProto.MultiRPCReq msg = MultiRPCProto.MultiRPCReq.parseFrom(data);
+                        final RPCProto.RPCReq msg = RPCProto.RPCReq.parseFrom(data);
 //                        requestExecutor.submit(new Runnable()
 //                        {
 //                            @Override
@@ -185,7 +186,7 @@ public class SingleRPCResponder extends Thread implements RpcController
         @Override
         public void run(Message message)
         {
-            final MultiRPCProto.MultiRPCResp msg = MultiRPCProto.MultiRPCResp.newBuilder().
+            final RPCProto.RPCResp msg = RPCProto.RPCResp.newBuilder().
                     setReqID(reqID).
                     setResults(message.toByteString()).build();
             ZMsg zMsg = new ZMsg();
