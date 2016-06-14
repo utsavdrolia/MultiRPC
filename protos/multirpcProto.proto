@@ -1,7 +1,7 @@
 syntax = "proto2";
-option java_outer_classname = "MultiRPCProto";
+option java_outer_classname = "RPCProto";
 
-message MultiRPCReq
+message RPCReq
 {
     required uint32 reqID = 1;
     required string serviceName = 2;
@@ -9,7 +9,7 @@ message MultiRPCReq
     required bytes args = 4;
 }
 
-message MultiRPCResp
+message RPCResp
 {
     required uint32 reqID = 1;
     required bytes results = 2;
