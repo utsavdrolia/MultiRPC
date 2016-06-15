@@ -8,6 +8,7 @@ import org.zeromq.ZThread;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,9 +25,10 @@ public class RPCServer implements RpcController
     private final Map<String, Service> mServices;
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
-
+    private ExecutorService executorService = Executors.newFixedThreadPool(1);
     public RPCServer(String myServiceAddress, Service service)
     {
+        System.out.println("Bound to " + this.myServiceAddress);
         this.myServiceAddress = myServiceAddress;
         mServices = new HashMap<>();
         mServices.put(service.getDescriptorForType().getName(), service);
@@ -35,7 +37,6 @@ public class RPCServer implements RpcController
         // Create local server
         serverSock = zContext.createSocket(ZMQ.ROUTER);
         serverSock.bind("tcp://" + this.myServiceAddress);
-
         msgProcPipe = ZThread.fork(zContext, new MyMsgProcessor(serverSock));
     }
 
@@ -69,12 +70,20 @@ public class RPCServer implements RpcController
         {
             System.out.println("Received ZMQ Message");
             // Senders ID
-            final byte[] cookie = incoming.pop().getData();
+            byte[] cookie = incoming.pop().getData();
             byte[] data = incoming.pop().getData();
             try
             {
                 RPCProto.RPCReq msg = RPCProto.RPCReq.parseFrom(data);
-                processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
+                executorService.submit(() -> {
+                    try
+                    {
+                        processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
+                    } catch (InvalidProtocolBufferException e)
+                    {
+                        e.printStackTrace();
+                    }
+                });
             } catch (InvalidProtocolBufferException e)
             {
                 e.printStackTrace();
