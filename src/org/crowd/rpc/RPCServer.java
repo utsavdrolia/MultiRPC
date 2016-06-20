@@ -24,11 +24,13 @@ public class RPCServer implements RpcController
     private final Map<String, Service> mServices;
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
-    private ExecutorService executorService = Executors.newFixedThreadPool(1);
-    public RPCServer(String myServiceAddress, Service service)
+    private ExecutorService executorService;
+
+    public RPCServer(String myServiceAddress, Service service, Integer threads)
     {
         System.out.println("Bound to " + this.myServiceAddress);
         this.myServiceAddress = myServiceAddress;
+        executorService = Executors.newFixedThreadPool(threads);
         mServices = new HashMap<>();
         mServices.put(service.getDescriptorForType().getName(), service);
         zContext = new ZContext(1);
@@ -39,12 +41,17 @@ public class RPCServer implements RpcController
         msgProcPipe = ZThread.fork(zContext, new MyMsgProcessor(serverSock));
     }
 
+    public RPCServer(String myServiceAddress, Service service)
+    {
+        this(myServiceAddress, service, 8);
+    }
 
-    /**
-     * Forward message to client
-     *
-     * @param msg
-     */
+
+                     /**
+                      * Forward message to client
+                      *
+                      * @param msg
+                      */
     private synchronized void send(ZMsg msg)
     {
         msg.send(msgProcPipe);
@@ -67,7 +74,7 @@ public class RPCServer implements RpcController
         @Override
         public void recv(ZMsg incoming)
         {
-            System.out.println("Received ZMQ Message");
+//            System.out.println("Received ZMQ Message");
             // Senders ID
             byte[] cookie = incoming.pop().getData();
             byte[] data = incoming.pop().getData();
@@ -99,7 +106,7 @@ public class RPCServer implements RpcController
      */
     private void processRequest(String serviceName, int methodID, ByteString args, int reqID, byte[] cookie) throws InvalidProtocolBufferException
     {
-        System.out.println("Received request for:" + serviceName + ":" + methodID);
+//        System.out.println("Received request for:" + serviceName + ":" + methodID);
         Service service = mServices.get(serviceName);
         if (service != null)
         {

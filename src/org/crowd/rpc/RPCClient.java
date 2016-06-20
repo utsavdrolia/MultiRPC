@@ -49,7 +49,7 @@ public class RPCClient implements RpcChannel, RpcController
         send(msg.toByteArray());
         // Put callback
         mCallbackHandler.putCallback(id, cb);
-        System.out.println("Called Method:" + methodDescriptor.getFullName());
+        //System.out.println("Called Method:" + methodDescriptor.getFullName());
     }
 
     /**
