@@ -26,7 +26,7 @@ public final class RPCProto {
     /**
      * <code>required string serviceName = 2;</code>
      */
-    java.lang.String getServiceName();
+    String getServiceName();
     /**
      * <code>required string serviceName = 2;</code>
      */
@@ -69,7 +69,7 @@ public final class RPCProto {
       args_ = com.google.protobuf.ByteString.EMPTY;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -135,11 +135,11 @@ public final class RPCProto {
       return RPCProto.internal_static_RPCReq_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return RPCProto.internal_static_RPCReq_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              RPCProto.RPCReq.class, RPCProto.RPCReq.Builder.class);
+              RPCReq.class, Builder.class);
     }
 
     private int bitField0_;
@@ -159,7 +159,7 @@ public final class RPCProto {
     }
 
     public static final int SERVICENAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object serviceName_;
+    private volatile Object serviceName_;
     /**
      * <code>required string serviceName = 2;</code>
      */
@@ -169,14 +169,14 @@ public final class RPCProto {
     /**
      * <code>required string serviceName = 2;</code>
      */
-    public java.lang.String getServiceName() {
-      java.lang.Object ref = serviceName_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getServiceName() {
+      Object ref = serviceName_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
           serviceName_ = s;
         }
@@ -188,11 +188,11 @@ public final class RPCProto {
      */
     public com.google.protobuf.ByteString
         getServiceNameBytes() {
-      java.lang.Object ref = serviceName_;
-      if (ref instanceof java.lang.String) {
+      Object ref = serviceName_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         serviceName_ = b;
         return b;
       } else {
@@ -299,58 +299,58 @@ public final class RPCProto {
     }
 
     private static final long serialVersionUID = 0L;
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static RPCProto.RPCReq parseFrom(byte[] data)
+    public static RPCReq parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static RPCProto.RPCReq parseFrom(java.io.InputStream input)
+    public static RPCReq parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static RPCProto.RPCReq parseDelimitedFrom(java.io.InputStream input)
+    public static RPCReq parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCReq parseDelimitedFrom(
+    public static RPCReq parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCReq parseFrom(
+    public static RPCReq parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -362,7 +362,7 @@ public final class RPCProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(RPCProto.RPCReq prototype) {
+    public static Builder newBuilder(RPCReq prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -370,9 +370,9 @@ public final class RPCProto {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -382,17 +382,17 @@ public final class RPCProto {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:RPCReq)
-        RPCProto.RPCReqOrBuilder {
+        RPCReqOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return RPCProto.internal_static_RPCReq_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return RPCProto.internal_static_RPCReq_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                RPCProto.RPCReq.class, RPCProto.RPCReq.Builder.class);
+                RPCReq.class, Builder.class);
       }
 
       // Construct using RPCProto.RPCReq.newBuilder()
@@ -401,7 +401,7 @@ public final class RPCProto {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -427,20 +427,20 @@ public final class RPCProto {
         return RPCProto.internal_static_RPCReq_descriptor;
       }
 
-      public RPCProto.RPCReq getDefaultInstanceForType() {
-        return RPCProto.RPCReq.getDefaultInstance();
+      public RPCReq getDefaultInstanceForType() {
+        return RPCReq.getDefaultInstance();
       }
 
-      public RPCProto.RPCReq build() {
-        RPCProto.RPCReq result = buildPartial();
+      public RPCReq build() {
+        RPCReq result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public RPCProto.RPCReq buildPartial() {
-        RPCProto.RPCReq result = new RPCProto.RPCReq(this);
+      public RPCReq buildPartial() {
+        RPCReq result = new RPCReq(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -465,16 +465,16 @@ public final class RPCProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof RPCProto.RPCReq) {
-          return mergeFrom((RPCProto.RPCReq)other);
+        if (other instanceof RPCReq) {
+          return mergeFrom((RPCReq)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(RPCProto.RPCReq other) {
-        if (other == RPCProto.RPCReq.getDefaultInstance()) return this;
+      public Builder mergeFrom(RPCReq other) {
+        if (other == RPCReq.getDefaultInstance()) return this;
         if (other.hasReqID()) {
           setReqID(other.getReqID());
         }
@@ -514,11 +514,11 @@ public final class RPCProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        RPCProto.RPCReq parsedMessage = null;
+        RPCReq parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (RPCProto.RPCReq) e.getUnfinishedMessage();
+          parsedMessage = (RPCReq) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -561,7 +561,7 @@ public final class RPCProto {
         return this;
       }
 
-      private java.lang.Object serviceName_ = "";
+      private Object serviceName_ = "";
       /**
        * <code>required string serviceName = 2;</code>
        */
@@ -571,18 +571,18 @@ public final class RPCProto {
       /**
        * <code>required string serviceName = 2;</code>
        */
-      public java.lang.String getServiceName() {
-        java.lang.Object ref = serviceName_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getServiceName() {
+        Object ref = serviceName_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
             serviceName_ = s;
           }
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -590,11 +590,11 @@ public final class RPCProto {
        */
       public com.google.protobuf.ByteString
           getServiceNameBytes() {
-        java.lang.Object ref = serviceName_;
+        Object ref = serviceName_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           serviceName_ = b;
           return b;
         } else {
@@ -605,7 +605,7 @@ public final class RPCProto {
        * <code>required string serviceName = 2;</code>
        */
       public Builder setServiceName(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -708,16 +708,16 @@ public final class RPCProto {
     }
 
     // @@protoc_insertion_point(class_scope:RPCReq)
-    private static final RPCProto.RPCReq DEFAULT_INSTANCE;
+    private static final RPCReq DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new RPCProto.RPCReq();
+      DEFAULT_INSTANCE = new RPCReq();
     }
 
-    public static RPCProto.RPCReq getDefaultInstance() {
+    public static RPCReq getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RPCReq>
+    @Deprecated public static final com.google.protobuf.Parser<RPCReq>
         PARSER = new com.google.protobuf.AbstractParser<RPCReq>() {
       public RPCReq parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
@@ -731,12 +731,12 @@ public final class RPCProto {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<RPCReq> getParserForType() {
       return PARSER;
     }
 
-    public RPCProto.RPCReq getDefaultInstanceForType() {
+    public RPCReq getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -763,6 +763,15 @@ public final class RPCProto {
      * <code>required bytes results = 2;</code>
      */
     com.google.protobuf.ByteString getResults();
+
+    /**
+     * <code>required uint32 duration = 3;</code>
+     */
+    boolean hasDuration();
+    /**
+     * <code>required uint32 duration = 3;</code>
+     */
+    int getDuration();
   }
   /**
    * Protobuf type {@code RPCResp}
@@ -778,9 +787,10 @@ public final class RPCProto {
     private RPCResp() {
       reqID_ = 0;
       results_ = com.google.protobuf.ByteString.EMPTY;
+      duration_ = 0;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -818,6 +828,11 @@ public final class RPCProto {
               results_ = input.readBytes();
               break;
             }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              duration_ = input.readUInt32();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -835,11 +850,11 @@ public final class RPCProto {
       return RPCProto.internal_static_RPCResp_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return RPCProto.internal_static_RPCResp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              RPCProto.RPCResp.class, RPCProto.RPCResp.Builder.class);
+              RPCResp.class, Builder.class);
     }
 
     private int bitField0_;
@@ -873,6 +888,21 @@ public final class RPCProto {
       return results_;
     }
 
+    public static final int DURATION_FIELD_NUMBER = 3;
+    private int duration_;
+    /**
+     * <code>required uint32 duration = 3;</code>
+     */
+    public boolean hasDuration() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required uint32 duration = 3;</code>
+     */
+    public int getDuration() {
+      return duration_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -887,6 +917,10 @@ public final class RPCProto {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasDuration()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -898,6 +932,9 @@ public final class RPCProto {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, results_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeUInt32(3, duration_);
       }
       unknownFields.writeTo(output);
     }
@@ -915,64 +952,68 @@ public final class RPCProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, results_);
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(3, duration_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static RPCProto.RPCResp parseFrom(byte[] data)
+    public static RPCResp parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static RPCProto.RPCResp parseFrom(java.io.InputStream input)
+    public static RPCResp parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static RPCProto.RPCResp parseDelimitedFrom(java.io.InputStream input)
+    public static RPCResp parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCResp parseDelimitedFrom(
+    public static RPCResp parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static RPCProto.RPCResp parseFrom(
+    public static RPCResp parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -984,7 +1025,7 @@ public final class RPCProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(RPCProto.RPCResp prototype) {
+    public static Builder newBuilder(RPCResp prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -992,9 +1033,9 @@ public final class RPCProto {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1004,17 +1045,17 @@ public final class RPCProto {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:RPCResp)
-        RPCProto.RPCRespOrBuilder {
+        RPCRespOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return RPCProto.internal_static_RPCResp_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return RPCProto.internal_static_RPCResp_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                RPCProto.RPCResp.class, RPCProto.RPCResp.Builder.class);
+                RPCResp.class, Builder.class);
       }
 
       // Construct using RPCProto.RPCResp.newBuilder()
@@ -1023,7 +1064,7 @@ public final class RPCProto {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1037,6 +1078,8 @@ public final class RPCProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         results_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
+        duration_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -1045,20 +1088,20 @@ public final class RPCProto {
         return RPCProto.internal_static_RPCResp_descriptor;
       }
 
-      public RPCProto.RPCResp getDefaultInstanceForType() {
-        return RPCProto.RPCResp.getDefaultInstance();
+      public RPCResp getDefaultInstanceForType() {
+        return RPCResp.getDefaultInstance();
       }
 
-      public RPCProto.RPCResp build() {
-        RPCProto.RPCResp result = buildPartial();
+      public RPCResp build() {
+        RPCResp result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public RPCProto.RPCResp buildPartial() {
-        RPCProto.RPCResp result = new RPCProto.RPCResp(this);
+      public RPCResp buildPartial() {
+        RPCResp result = new RPCResp(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1069,27 +1112,34 @@ public final class RPCProto {
           to_bitField0_ |= 0x00000002;
         }
         result.results_ = results_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.duration_ = duration_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof RPCProto.RPCResp) {
-          return mergeFrom((RPCProto.RPCResp)other);
+        if (other instanceof RPCResp) {
+          return mergeFrom((RPCResp)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(RPCProto.RPCResp other) {
-        if (other == RPCProto.RPCResp.getDefaultInstance()) return this;
+      public Builder mergeFrom(RPCResp other) {
+        if (other == RPCResp.getDefaultInstance()) return this;
         if (other.hasReqID()) {
           setReqID(other.getReqID());
         }
         if (other.hasResults()) {
           setResults(other.getResults());
+        }
+        if (other.hasDuration()) {
+          setDuration(other.getDuration());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1103,6 +1153,9 @@ public final class RPCProto {
         if (!hasResults()) {
           return false;
         }
+        if (!hasDuration()) {
+          return false;
+        }
         return true;
       }
 
@@ -1110,11 +1163,11 @@ public final class RPCProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        RPCProto.RPCResp parsedMessage = null;
+        RPCResp parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (RPCProto.RPCResp) e.getUnfinishedMessage();
+          parsedMessage = (RPCResp) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1192,20 +1245,52 @@ public final class RPCProto {
         return this;
       }
 
+      private int duration_ ;
+      /**
+       * <code>required uint32 duration = 3;</code>
+       */
+      public boolean hasDuration() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required uint32 duration = 3;</code>
+       */
+      public int getDuration() {
+        return duration_;
+      }
+      /**
+       * <code>required uint32 duration = 3;</code>
+       */
+      public Builder setDuration(int value) {
+        bitField0_ |= 0x00000004;
+        duration_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 duration = 3;</code>
+       */
+      public Builder clearDuration() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        duration_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:RPCResp)
     }
 
     // @@protoc_insertion_point(class_scope:RPCResp)
-    private static final RPCProto.RPCResp DEFAULT_INSTANCE;
+    private static final RPCResp DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new RPCProto.RPCResp();
+      DEFAULT_INSTANCE = new RPCResp();
     }
 
-    public static RPCProto.RPCResp getDefaultInstance() {
+    public static RPCResp getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RPCResp>
+    @Deprecated public static final com.google.protobuf.Parser<RPCResp>
         PARSER = new com.google.protobuf.AbstractParser<RPCResp>() {
       public RPCResp parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
@@ -1219,12 +1304,12 @@ public final class RPCProto {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<RPCResp> getParserForType() {
       return PARSER;
     }
 
-    public RPCProto.RPCResp getDefaultInstanceForType() {
+    public RPCResp getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1248,11 +1333,12 @@ public final class RPCProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\023multirpcProto.proto\"L\n\006RPCReq\022\r\n\005reqID" +
       "\030\001 \002(\r\022\023\n\013serviceName\030\002 \002(\t\022\020\n\010methodID\030" +
-      "\003 \002(\r\022\014\n\004args\030\004 \002(\014\")\n\007RPCResp\022\r\n\005reqID\030" +
-      "\001 \002(\r\022\017\n\007results\030\002 \002(\014B\nB\010RPCProto"
+      "\003 \002(\r\022\014\n\004args\030\004 \002(\014\";\n\007RPCResp\022\r\n\005reqID\030" +
+      "\001 \002(\r\022\017\n\007results\030\002 \002(\014\022\020\n\010duration\030\003 \002(\r" +
+      "B\014B\010RPCProtoH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1271,13 +1357,13 @@ public final class RPCProto {
     internal_static_RPCReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RPCReq_descriptor,
-        new java.lang.String[] { "ReqID", "ServiceName", "MethodID", "Args", });
+        new String[] { "ReqID", "ServiceName", "MethodID", "Args", });
     internal_static_RPCResp_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_RPCResp_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RPCResp_descriptor,
-        new java.lang.String[] { "ReqID", "Results", });
+        new String[] { "ReqID", "Results", "Duration", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

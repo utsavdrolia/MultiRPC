@@ -20,7 +20,7 @@ public class CallbackHandler
     public CallbackHandler()
     {
         mCallbacks = new Hashtable<>();
-        mExecutorService = Executors.newSingleThreadExecutor();
+        mExecutorService = Executors.newFixedThreadPool(4);
     }
 
 

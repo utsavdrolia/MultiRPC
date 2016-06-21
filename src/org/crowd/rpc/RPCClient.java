@@ -33,7 +33,7 @@ public class RPCClient implements RpcChannel, RpcController
     }
 
     @Override
-    public void callMethod(Descriptors.MethodDescriptor methodDescriptor, RpcController rpcController, Message message, Message respMessageProto, RpcCallback<Message> rpcCallback)
+    public synchronized void callMethod(Descriptors.MethodDescriptor methodDescriptor, RpcController rpcController, Message message, Message respMessageProto, RpcCallback<Message> rpcCallback)
     {
         // Get new ID
         Integer id = getnextid();
