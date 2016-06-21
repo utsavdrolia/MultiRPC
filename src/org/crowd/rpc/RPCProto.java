@@ -763,15 +763,6 @@ public final class RPCProto {
      * <code>required bytes results = 2;</code>
      */
     com.google.protobuf.ByteString getResults();
-
-    /**
-     * <code>required uint32 duration = 3;</code>
-     */
-    boolean hasDuration();
-    /**
-     * <code>required uint32 duration = 3;</code>
-     */
-    int getDuration();
   }
   /**
    * Protobuf type {@code RPCResp}
@@ -787,7 +778,6 @@ public final class RPCProto {
     private RPCResp() {
       reqID_ = 0;
       results_ = com.google.protobuf.ByteString.EMPTY;
-      duration_ = 0;
     }
 
     @Override
@@ -826,11 +816,6 @@ public final class RPCProto {
             case 18: {
               bitField0_ |= 0x00000002;
               results_ = input.readBytes();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              duration_ = input.readUInt32();
               break;
             }
           }
@@ -888,21 +873,6 @@ public final class RPCProto {
       return results_;
     }
 
-    public static final int DURATION_FIELD_NUMBER = 3;
-    private int duration_;
-    /**
-     * <code>required uint32 duration = 3;</code>
-     */
-    public boolean hasDuration() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required uint32 duration = 3;</code>
-     */
-    public int getDuration() {
-      return duration_;
-    }
-
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -917,10 +887,6 @@ public final class RPCProto {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasDuration()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -932,9 +898,6 @@ public final class RPCProto {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, results_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeUInt32(3, duration_);
       }
       unknownFields.writeTo(output);
     }
@@ -951,10 +914,6 @@ public final class RPCProto {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, results_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(3, duration_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -1078,8 +1037,6 @@ public final class RPCProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         results_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
-        duration_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -1112,10 +1069,6 @@ public final class RPCProto {
           to_bitField0_ |= 0x00000002;
         }
         result.results_ = results_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.duration_ = duration_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1138,9 +1091,6 @@ public final class RPCProto {
         if (other.hasResults()) {
           setResults(other.getResults());
         }
-        if (other.hasDuration()) {
-          setDuration(other.getDuration());
-        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -1151,9 +1101,6 @@ public final class RPCProto {
           return false;
         }
         if (!hasResults()) {
-          return false;
-        }
-        if (!hasDuration()) {
           return false;
         }
         return true;
@@ -1245,38 +1192,6 @@ public final class RPCProto {
         return this;
       }
 
-      private int duration_ ;
-      /**
-       * <code>required uint32 duration = 3;</code>
-       */
-      public boolean hasDuration() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required uint32 duration = 3;</code>
-       */
-      public int getDuration() {
-        return duration_;
-      }
-      /**
-       * <code>required uint32 duration = 3;</code>
-       */
-      public Builder setDuration(int value) {
-        bitField0_ |= 0x00000004;
-        duration_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required uint32 duration = 3;</code>
-       */
-      public Builder clearDuration() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        duration_ = 0;
-        onChanged();
-        return this;
-      }
-
       // @@protoc_insertion_point(builder_scope:RPCResp)
     }
 
@@ -1336,9 +1251,8 @@ public final class RPCProto {
     String[] descriptorData = {
       "\n\023multirpcProto.proto\"L\n\006RPCReq\022\r\n\005reqID" +
       "\030\001 \002(\r\022\023\n\013serviceName\030\002 \002(\t\022\020\n\010methodID\030" +
-      "\003 \002(\r\022\014\n\004args\030\004 \002(\014\";\n\007RPCResp\022\r\n\005reqID\030" +
-      "\001 \002(\r\022\017\n\007results\030\002 \002(\014\022\020\n\010duration\030\003 \002(\r" +
-      "B\014B\010RPCProtoH\001"
+      "\003 \002(\r\022\014\n\004args\030\004 \002(\014\")\n\007RPCResp\022\r\n\005reqID\030" +
+      "\001 \002(\r\022\017\n\007results\030\002 \002(\014B\nB\010RPCProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1363,7 +1277,7 @@ public final class RPCProto {
     internal_static_RPCResp_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_RPCResp_descriptor,
-        new String[] { "ReqID", "Results", "Duration", });
+        new String[] { "ReqID", "Results", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -187,12 +187,11 @@ public class RPCServer implements RpcController
     {
         private final int reqID;
         private final byte[] replyTo;
-        private long start;
+
         public LocalServiceCompletedCallback(int reqID, byte[] replyTo)
         {
             this.reqID = reqID;
             this.replyTo = replyTo;
-            this.start = System.currentTimeMillis();
         }
 
         @Override
@@ -200,7 +199,6 @@ public class RPCServer implements RpcController
         {
             final RPCProto.RPCResp msg = RPCProto.RPCResp.newBuilder().
                     setReqID(reqID).
-                    setDuration((int) (System.currentTimeMillis() - start)).
                     setResults(message.toByteString()).build();
             ZMsg zMsg = new ZMsg();
             // Add the address to send message
