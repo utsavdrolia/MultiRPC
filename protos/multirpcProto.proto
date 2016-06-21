@@ -1,5 +1,6 @@
 syntax = "proto2";
 option java_outer_classname = "RPCProto";
+option optimize_for = SPEED;
 
 message RPCReq
 {
@@ -13,4 +14,5 @@ message RPCResp
 {
     required uint32 reqID = 1;
     required bytes results = 2;
+    required uint32 duration = 3;
 }
