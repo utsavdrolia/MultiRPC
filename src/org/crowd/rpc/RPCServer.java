@@ -47,11 +47,11 @@ public class RPCServer implements RpcController
     }
 
 
-                     /**
-                      * Forward message to client
-                      *
-                      * @param msg
-                      */
+    /**
+    * Forward message to client
+    *
+    * @param msg
+    */
     private synchronized void send(ZMsg msg)
     {
         msg.send(msgProcPipe);
@@ -76,18 +76,23 @@ public class RPCServer implements RpcController
         {
 //            System.out.println("Received ZMQ Message");
             // Senders ID
-            byte[] cookie = incoming.pop().getData();
+            final byte[] cookie = incoming.pop().getData();
             byte[] data = incoming.pop().getData();
             try
             {
-                RPCProto.RPCReq msg = RPCProto.RPCReq.parseFrom(data);
-                executorService.submit(() -> {
-                    try
+                final RPCProto.RPCReq msg = RPCProto.RPCReq.parseFrom(data);
+                executorService.submit(new Runnable()
+                {
+                    @Override
+                    public void run()
                     {
-                        processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
-                    } catch (InvalidProtocolBufferException e)
-                    {
-                        e.printStackTrace();
+                        try
+                        {
+                            processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
+                        } catch (InvalidProtocolBufferException e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
                 });
             } catch (InvalidProtocolBufferException e)
