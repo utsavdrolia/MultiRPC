@@ -32,7 +32,6 @@ public class RPCServer implements RpcController
 
     public RPCServer(String myServiceAddress, Service service, Integer threads)
     {
-        System.out.println("Bound to " + this.myServiceAddress);
         this.myServiceAddress = myServiceAddress;
         executorService = Executors.newFixedThreadPool(threads);
         enqueued = new ConcurrentHashMap<>();
@@ -43,6 +42,7 @@ public class RPCServer implements RpcController
         // Create local server
         serverSock = zContext.createSocket(ZMQ.ROUTER);
         serverSock.bind("tcp://" + this.myServiceAddress);
+        System.out.println("Bound to " + this.myServiceAddress);
         msgProcPipe = ZThread.fork(zContext, new MyMsgProcessor(serverSock));
     }
 
