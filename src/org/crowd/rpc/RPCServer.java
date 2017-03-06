@@ -1,6 +1,8 @@
 package org.crowd.rpc;
 
 import com.google.protobuf.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Registers with a single RPC requester and then serves each request as it comes in
@@ -26,9 +29,13 @@ public class RPCServer implements RpcController
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
     private ExecutorService executorService;
+    final static Logger logger = LoggerFactory.getLogger(RPCServer.class);
 
     // To track queued request times
     private Map<Integer, Long> enqueued;
+
+    private final AtomicLong send_counter = new AtomicLong(0L);
+    private final AtomicLong recv_counter = new AtomicLong(0L);
 
     public RPCServer(String myServiceAddress, Service service, Integer threads)
     {
@@ -67,6 +74,7 @@ public class RPCServer implements RpcController
     */
     private synchronized void send(ZMsg msg)
     {
+        logger.debug("Sending Request Number:" + send_counter.incrementAndGet());
         msg.send(msgProcPipe);
     }
 
@@ -89,6 +97,7 @@ public class RPCServer implements RpcController
         {
 //            System.out.println("Received ZMQ Message");
             // Senders ID
+            logger.debug("Received Request Number:" + recv_counter.incrementAndGet());
             Long req_rx = System.currentTimeMillis();
             final byte[] cookie = incoming.pop().getData();
             byte[] data = incoming.pop().getData();
@@ -100,7 +109,9 @@ public class RPCServer implements RpcController
                 if (calledmethod != null)
                 {
                     final Message appmsg = service.getRequestPrototype(calledmethod).getParserForType().parseFrom(msg.getArgs());
-                    enqueued.put(appmsg.hashCode(), req_rx);
+                    int hash = appmsg.hashCode();
+                    logger.debug("Received Hash:" + hash);
+                    enqueued.put(hash, req_rx);
                     executorService.submit(new Runnable()
                     {
                         @Override
