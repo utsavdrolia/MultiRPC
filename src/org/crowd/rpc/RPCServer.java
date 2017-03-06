@@ -1,6 +1,8 @@
 package org.crowd.rpc;
 
 import com.google.protobuf.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMsg;
@@ -8,8 +10,10 @@ import org.zeromq.ZThread;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Registers with a single RPC requester and then serves each request as it comes in
@@ -25,11 +29,19 @@ public class RPCServer implements RpcController
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
     private ExecutorService executorService;
+    final static Logger logger = LoggerFactory.getLogger(RPCServer.class);
+
+    // To track queued request times
+    private Map<Integer, Long> enqueued;
+
+    private final AtomicLong send_counter = new AtomicLong(0L);
+    private final AtomicLong recv_counter = new AtomicLong(0L);
 
     public RPCServer(String myServiceAddress, Service service, Integer threads)
     {
         this.myServiceAddress = myServiceAddress;
         executorService = Executors.newFixedThreadPool(threads);
+        enqueued = new ConcurrentHashMap<>();
         mServices = new HashMap<>();
         mServices.put(service.getDescriptorForType().getName(), service);
         zContext = new ZContext(1);
@@ -46,7 +58,15 @@ public class RPCServer implements RpcController
         this(myServiceAddress, service, 8);
     }
 
-
+    /**
+     * Get the time this request was received
+     * @param msgHash
+     * @return
+     */
+    public Long getRequestRxTime(int msgHash)
+    {
+        return enqueued.remove(msgHash);
+    }
     /**
     * Forward message to client
     *
@@ -54,6 +74,7 @@ public class RPCServer implements RpcController
     */
     private synchronized void send(ZMsg msg)
     {
+        logger.debug("Sending Request Number:" + send_counter.incrementAndGet());
         msg.send(msgProcPipe);
     }
 
@@ -76,25 +97,36 @@ public class RPCServer implements RpcController
         {
 //            System.out.println("Received ZMQ Message");
             // Senders ID
+            logger.debug("Received Request Number:" + recv_counter.incrementAndGet());
+            Long req_rx = System.currentTimeMillis();
             final byte[] cookie = incoming.pop().getData();
             byte[] data = incoming.pop().getData();
             try
             {
                 final RPCProto.RPCReq msg = RPCProto.RPCReq.parseFrom(data);
-                executorService.submit(new Runnable()
+                final Service service = mServices.get(msg.getServiceName());
+                final Descriptors.MethodDescriptor calledmethod = getCalledMethod(service, msg.getMethodID());
+                if (calledmethod != null)
                 {
-                    @Override
-                    public void run()
+                    final Message appmsg = service.getRequestPrototype(calledmethod).getParserForType().parseFrom(msg.getArgs());
+                    int hash = appmsg.hashCode();
+                    logger.debug("Received Hash:" + hash);
+                    enqueued.put(hash, req_rx);
+                    executorService.submit(new Runnable()
                     {
-                        try
+                        @Override
+                        public void run()
                         {
-                            processRequest(msg.getServiceName(), msg.getMethodID(), msg.getArgs(), msg.getReqID(), cookie);
-                        } catch (InvalidProtocolBufferException e)
-                        {
-                            e.printStackTrace();
+                            try
+                            {
+                                processRequest(service, calledmethod, appmsg, msg.getReqID(), cookie);
+                            } catch (InvalidProtocolBufferException e)
+                            {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } catch (InvalidProtocolBufferException e)
             {
                 e.printStackTrace();
@@ -102,35 +134,36 @@ public class RPCServer implements RpcController
         }
     }
 
+
     /**
-     * Process the service request
-     * @param serviceName
+     * Find the called method in the service directory
+     * @param service
      * @param methodID
-     * @param args
-     * @param cookie
+     * @return
      */
-    private void processRequest(String serviceName, int methodID, ByteString args, int reqID, byte[] cookie) throws InvalidProtocolBufferException
+    private Descriptors.MethodDescriptor getCalledMethod(Service service, int methodID)
     {
-//        System.out.println("Received request for:" + serviceName + ":" + methodID);
-        Service service = mServices.get(serviceName);
         if (service != null)
         {
             Descriptors.ServiceDescriptor serviceDescriptor = service.getDescriptorForType();
-            Descriptors.MethodDescriptor calledmethod = null;
             for (Descriptors.MethodDescriptor method : serviceDescriptor.getMethods())
             {
                 if (method.getIndex() == methodID)
                 {
-                    calledmethod = method;
-                    break;
+                    return method;
                 }
             }
-            if (calledmethod != null)
-            {
-                Message msg = service.getRequestPrototype(calledmethod).getParserForType().parseFrom(args);
-                service.callMethod(calledmethod, this, msg, new LocalServiceCompletedCallback(reqID, cookie));
-            }
         }
+        return null;
+    }
+
+    /**
+     * Process the service request
+     * @param cookie
+     */
+    private void processRequest(Service service, Descriptors.MethodDescriptor calledmethod, Message appmsg, int reqID, byte[] cookie) throws InvalidProtocolBufferException
+    {
+            service.callMethod(calledmethod, this, appmsg, new LocalServiceCompletedCallback(reqID, cookie));
     }
 
     public boolean isStopped()
