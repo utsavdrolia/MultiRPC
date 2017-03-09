@@ -58,6 +58,15 @@ public class RPCServer implements RpcController
         this(myServiceAddress, service, 8);
     }
 
+    public RPCServer(String myServiceAddress, Service... services)
+    {
+        this(myServiceAddress, services[0], 8);
+        for (int i = 1; i < services.length; i++)
+        {
+            mServices.put(services[i].getDescriptorForType().getName(), services[i]);
+        }
+    }
+
     /**
      * Get the time this request was received
      * @param msgHash
