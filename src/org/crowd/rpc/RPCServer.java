@@ -29,7 +29,7 @@ public class RPCServer implements RpcController
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
     private ExecutorService executorService;
-    final static Logger logger = LoggerFactory.getLogger(RPCServer.class);
+    private final static Logger logger = LoggerFactory.getLogger(RPCServer.class);
 
     // To track queued request times
     private Map<Integer, Long> enqueued;

@@ -18,7 +18,7 @@ public abstract class MsgProcessor implements ZThread.IAttachedRunnable
     private ZMQ.Socket serverSocket;
     private final AtomicLong send_counter = new AtomicLong(0L);
     private final AtomicLong recv_counter = new AtomicLong(0L);
-    final static Logger logger = LoggerFactory.getLogger(MsgProcessor.class);
+    private final static Logger logger = LoggerFactory.getLogger(MsgProcessor.class);
 
 
     public MsgProcessor(ZMQ.Socket serverSocket)
