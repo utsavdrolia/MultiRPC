@@ -1,7 +1,7 @@
 package org.crowd.rpc;
 
+import ch.qos.logback.classic.Logger;
 import com.google.protobuf.*;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
@@ -29,8 +29,7 @@ public class RPCServer implements RpcController
     private ZMQ.Socket serverSock;
     private ZMQ.Socket msgProcPipe;
     private ExecutorService executorService;
-    private final static Logger logger = LoggerFactory.getLogger(RPCServer.class);
-
+    private final static Logger logger = (Logger) LoggerFactory.getLogger(RPCServer.class);
     // To track queued request times
     private Map<Integer, Long> enqueued;
 
@@ -39,6 +38,8 @@ public class RPCServer implements RpcController
 
     public RPCServer(String myServiceAddress, Service service, Integer threads)
     {
+        // Set logger
+        logger.setLevel(ch.qos.logback.classic.Level.OFF);
         this.myServiceAddress = myServiceAddress;
         executorService = Executors.newFixedThreadPool(threads);
         enqueued = new ConcurrentHashMap<>();
@@ -49,7 +50,7 @@ public class RPCServer implements RpcController
         // Create local server
         serverSock = zContext.createSocket(ZMQ.ROUTER);
         serverSock.bind("tcp://" + this.myServiceAddress);
-        System.out.println("Bound to " + this.myServiceAddress);
+        logger.debug("Bound to " + this.myServiceAddress);
         msgProcPipe = ZThread.fork(zContext, new MyMsgProcessor(serverSock));
     }
 

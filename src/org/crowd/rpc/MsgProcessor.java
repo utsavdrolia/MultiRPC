@@ -1,6 +1,6 @@
 package org.crowd.rpc;
 
-import org.slf4j.Logger;
+import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
@@ -18,11 +18,13 @@ public abstract class MsgProcessor implements ZThread.IAttachedRunnable
     private ZMQ.Socket serverSocket;
     private final AtomicLong send_counter = new AtomicLong(0L);
     private final AtomicLong recv_counter = new AtomicLong(0L);
-    private final static Logger logger = LoggerFactory.getLogger(MsgProcessor.class);
+    private final static Logger logger = (Logger) LoggerFactory.getLogger(MsgProcessor.class);
 
 
     public MsgProcessor(ZMQ.Socket serverSocket)
     {
+        // Set logger
+        logger.setLevel(ch.qos.logback.classic.Level.OFF);
         this.serverSocket = serverSocket;
     }
 
