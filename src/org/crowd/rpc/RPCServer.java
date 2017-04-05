@@ -56,12 +56,12 @@ public class RPCServer implements RpcController
 
     public RPCServer(String myServiceAddress, Service service)
     {
-        this(myServiceAddress, service, 8);
+        this(myServiceAddress, service, 1);
     }
 
     public RPCServer(String myServiceAddress, Service... services)
     {
-        this(myServiceAddress, services[0], 8);
+        this(myServiceAddress, services[0], 1);
         for (int i = 1; i < services.length; i++)
         {
             mServices.put(services[i].getDescriptorForType().getName(), services[i]);
